@@ -15,18 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AES.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="Tables.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DES.h">
+    <ClInclude Include="key.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AES.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DES.cpp">
+    <ClCompile Include="key.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

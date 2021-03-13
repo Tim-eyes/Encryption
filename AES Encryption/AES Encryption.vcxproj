@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7aa8b044-39f8-429d-acd1-21f75a4f70a4}</ProjectGuid>
-    <RootNamespace>Project</RootNamespace>
+    <ProjectGuid>{708f10df-a5f0-4110-a5fa-bd115425f74a}</ProjectGuid>
+    <RootNamespace>AESEncryption</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>DES_Encryption</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DES.h" />
+    <ClInclude Include="AES.h" />
+    <ClInclude Include="key.h" />
     <ClInclude Include="Tables.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DES.cpp" />
+    <ClCompile Include="AES.cpp" />
+    <ClCompile Include="key.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

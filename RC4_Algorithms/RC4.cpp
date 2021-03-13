@@ -6,11 +6,11 @@
 #include <malloc.h>
 
 
-RC4::RC4(unsigned char* p, unsigned char* k,int size):sizeKey(size)
+RC4::RC4(uint8_t* p, uint8_t* k,int size):sizeKey(size)
 {
-	plaintext=(unsigned char *)malloc(sizeof(p) + 1);
-	cipher = (unsigned char*)malloc(sizeof(p) + 1);
-	kBox = (unsigned char*)malloc(sizeof(k) + 1);
+	plaintext=(uint8_t *)malloc(sizeof(p) + 1);
+	cipher = (uint8_t*)malloc(sizeof(p) + 1);
+	kBox = (uint8_t*)malloc(sizeof(k) + 1);
 
 }
 
@@ -23,9 +23,9 @@ void RC4::rc4Func()
 }
 
 
-void RC4::swap(unsigned char box[], int i, int j)
+void RC4::swap(uint8_t box[], int i, int j)
 {
-	unsigned char tmp = box[i];
+	uint8_t tmp = box[i];
 	box[i] = box[j];
 	box[j] = tmp;
 }
@@ -33,7 +33,7 @@ void RC4::swap(unsigned char box[], int i, int j)
 void RC4::initBox()
 {
 	for (int i = 0; i < LEN; i++) {
-		sBox[i] = (unsigned char)i;
+		sBox[i] = (uint8_t)i;
 		tBox[i] = kBox[i % sizeKey];
 	}
 	int j = 0;

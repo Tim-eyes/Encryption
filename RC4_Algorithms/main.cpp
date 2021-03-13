@@ -12,7 +12,7 @@ int main() {
 	std::cin >> text;
 	std::cout << "key:";
 	std::cin >> key;*/
-	RC4 rc4((unsigned char*)text.c_str(), (unsigned char*)key.c_str(), key.length());
+	RC4 rc4((uint8_t*)text.c_str(), (uint8_t*)key.c_str(), key.length());
 	rc4.rc4Func();
 	std::cout << rc4.getCipher()<< "\n";
 	return 0;

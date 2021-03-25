@@ -290,7 +290,45 @@ $S_1$ :
 > - Key:1010000010
 > - <font color=red >**Ciphertext:01110111**</font>
 >  
-> Process:
+> Process: 
+> 1. Key :1010000010
+> 
+> |||left|right|
+> |-------|--------|----------|----------| 
+> |key||10100|00010|
+> |a|key $P_{10}$|10000|01100|
+> |b|a LS-1|00001|11000|
+> |c(**key1**)|b $P_8$|**1010**|**0100**|
+> |d|b LS-2|00100|00011|
+> |e(**key2**)|d $P_8$|**0100**|**0011**|
+> 
+> 2. Plaintext:01110010
+> 
+> |||left|right|
+> |--------|-----------|---------------|----------|
+> |round1|||| 
+> |plaintext||0111|0010|
+> |a|plaintext IP|1010|1001|
+> |b|a right EP|1010|0100|
+> |c|b$\oplus$key1|0110|0111|
+> ||c $S_0$|00 0row 11 3col||
+> ||c $S_1$||01 1row 11 3col|
+> |d|after $S_0,S_1$|10|11|
+> |e|d $P_4$|01|11|
+> |f|e $\oplus$a left and joint a right|1101|1001|
+> |g|SW e and a right|1001|1101|
+> |round2||||
+> |h|g right EP|1110|1011|
+> |i|h$\oplus$ key2|0111|1001|
+> ||i $S_0$|10 2row 01 1col||
+> ||i $S_1$||10 2row 00 0col|
+> |j|after $S_0,S_1$|10|11|
+> |k|j $P_4$|01|11|
+> |l|k $\oplus$ g left and joint g right|1110|1101|
+> |m|l $IP^{-1}$|**0111**|**0111**|
+> 
+> Hence: <font color=red >**Ciphertext:01110111**</font>
+
 
 ## Comparing S-DES and DES
 Specifically algorithm and flow chart of S-DES can referred to [Section Simple-DES](#simple-des) above, in this part we only summary the realization of 64 bits DES.
@@ -657,7 +695,8 @@ All sequences in Table:
 |6|1|6|1|6|1|
 
 When sequences are of length $6(\varphi(7))$, it this case, $a=3,5$ ;it means the base integer a generates (via powers) the set of nonzero integers modulo 7.
--Each such integer, 3,5, is called a **primitive root** of the modulus 7.
+
+Each such integer, 3,5, is called a **primitive root** of the modulus 7.
 
 //TBD
 

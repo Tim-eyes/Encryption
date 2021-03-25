@@ -18,7 +18,7 @@ private:
 public:
 	key();
 	blockType& round(const uint8_t r) { return roundKey[r]; }
-	void keyRound0(blockType& k, const uint8_t* K);
+	//void keyRound0(blockType& k, const uint8_t* K);
 };
 
 #endif // !_KEY_H_

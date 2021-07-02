@@ -1,52 +1,64 @@
 # Contents
 - [Contents](#contents)
 - [Classical Encryption Techniques](#classical-encryption-techniques)
-  - [Model of Encryption for Confidentiality](#model-of-encryption-for-confidentiality)
-  - [Terminology](#terminology)
-  - [Caesar Cipher](#caesar-cipher)
-  - [PlayFair Cipher](#playfair-cipher)
-  - [Vigenere Cipher](#vigenere-cipher)
-  - [Transposition](#transposition)
-    - [Rail FenceTransposition](#rail-fencetransposition)
-    - [Rows/ColumnsTransposition](#rowscolumnstransposition)
+	- [Model of Encryption for Confidentiality](#model-of-encryption-for-confidentiality)
+	- [Terminology](#terminology)
+	- [Caesar Cipher](#caesar-cipher)
+	- [PlayFair Cipher](#playfair-cipher)
+	- [Vigenere Cipher](#vigenere-cipher)
+	- [Transposition](#transposition)
+		- [Rail FenceTransposition](#rail-fencetransposition)
+		- [Rows/ColumnsTransposition](#rowscolumnstransposition)
 - [Simple-DES](#simple-des)
-  - [Algorithm](#algorithm)
-  - [Operations](#operations)
-  - [S-Boxes](#s-boxes)
-  - [Comparing S-DES and DES](#comparing-s-des-and-des)
-  - [Summary](#summary)
+	- [Algorithm](#algorithm)
+	- [Operations](#operations)
+	- [S-Boxes](#s-boxes)
+	- [Comparing S-DES and DES](#comparing-s-des-and-des)
+	- [Summary](#summary)
 - [Block Ciphers](#block-ciphers)
-  - [Block Ciphers Principles](#block-ciphers-principles)
-    - [Block Ciphers and Stream Ciphers](#block-ciphers-and-stream-ciphers)
-    - [Reversible and Irreversible Mappings](#reversible-and-irreversible-mappings)
-  - [Block Cipher Operation](#block-cipher-operation)
-    - [ECB](#ecb)
-    - [CBC](#cbc)
-    - [CFB](#cfb)
-    - [OFB](#ofb)
-    - [CTR](#ctr)
-    - [Feedback Characteristics of Modes](#feedback-characteristics-of-modes)
-    - [XTS-AES](#xts-aes)
+	- [Block Ciphers Principles](#block-ciphers-principles)
+		- [Block Ciphers and Stream Ciphers](#block-ciphers-and-stream-ciphers)
+		- [Reversible and Irreversible Mappings](#reversible-and-irreversible-mappings)
+	- [Block Cipher Operation](#block-cipher-operation)
+		- [ECB](#ecb)
+		- [CBC](#cbc)
+		- [CFB](#cfb)
+		- [OFB](#ofb)
+		- [CTR](#ctr)
+		- [Feedback Characteristics of Modes](#feedback-characteristics-of-modes)
+		- [XTS-AES](#xts-aes)
 - [Pseudo-Random Numbers and Stream Ciphers](#pseudo-random-numbers-and-stream-ciphers)
-  - [Random Numbers](#random-numbers)
-  - [TRNG, PRNG and PRF](#trng-prng-and-prf)
-  - [Linear Congruential Generator](#linear-congruential-generator)
-  - [Blum Blum Shub (BBS) Generator](#blum-blum-shub-bbs-generator)
-  - [PRNG Mechanisms Based on BlockCiphers](#prng-mechanisms-based-on-blockciphers)
-    - [ANSI X9.17 PRNG](#ansi-x917-prng)
-  - [RC4](#rc4)
+	- [Random Numbers](#random-numbers)
+	- [TRNG, PRNG and PRF](#trng-prng-and-prf)
+	- [Linear Congruential Generator](#linear-congruential-generator)
+	- [Blum Blum Shub (BBS) Generator](#blum-blum-shub-bbs-generator)
+	- [PRNG Mechanisms Based on BlockCiphers](#prng-mechanisms-based-on-blockciphers)
+		- [ANSI X9.17 PRNG](#ansi-x917-prng)
+	- [RC4](#rc4)
 - [Fundamentals of Number Theory](#fundamentals-of-number-theory)
-  - [Divisibility and Prime Numbers](#divisibility-and-prime-numbers)
-    - [Divisibility](#divisibility)
-    - [Prime Numbers](#prime-numbers)
-  - [ModularArithmetic](#modulararithmetic)
-    - [Properties of ModularArithmetic](#properties-of-modulararithmetic)
-    - [Division in Modular Arithmetic](#division-in-modular-arithmetic)
-    - [Fermat's Theorem](#fermats-theorem)
-    - [Euler's Totient Function](#eulers-totient-function)
-    - [Euler's Theorem](#eulers-theorem)
-    - [Logarithms in Modular Arithmetic](#logarithms-in-modular-arithmetic)
-    - [Prime Roots](#prime-roots)
+	- [Divisibility and Prime Numbers](#divisibility-and-prime-numbers)
+		- [Divisibility](#divisibility)
+		- [Prime Numbers](#prime-numbers)
+	- [ModularArithmetic](#modulararithmetic)
+		- [Properties of ModularArithmetic](#properties-of-modulararithmetic)
+		- [Division in Modular Arithmetic](#division-in-modular-arithmetic)
+		- [Fermat's Theorem](#fermats-theorem)
+		- [Euler's Totient Function](#eulers-totient-function)
+		- [Euler's Theorem](#eulers-theorem)
+		- [Logarithms in Modular Arithmetic](#logarithms-in-modular-arithmetic)
+		- [Prime Roots](#prime-roots)
+- [Public Key Cryptography](#public-key-cryptography)
+	- [RSA](#rsa)
+	- [Diffie-Hellman](#diffie-hellman)
+	- [ElGamal Cryptosystem](#elgamal-cryptosystem)
+		- [Key Generation](#key-generation)
+		- [Encryption](#encryption)
+		- [Decryption](#decryption)
+- [Cryptographic Hash Functions](#cryptographic-hash-functions)
+	- [Digital Signatures](#digital-signatures)
+		- [ElGamal Scheme](#elgamal-scheme)
+		- [Schnorr Scheme](#schnorr-scheme)
+- [Message Authentication Codes](#message-authentication-codes)
 
 # Classical Encryption Techniques
 ## Model of Encryption for Confidentiality
@@ -698,5 +710,123 @@ When sequences are of length $6(\varphi(7))$, it this case, $a=3,5$ ;it means th
 
 Each such integer, 3,5, is called a **primitive root** of the modulus 7.
 
-//TBD
+# Public Key Cryptography
+## RSA
+Key Generation :
+1. Choose primes p and q(private, chosen)
+and calculate n = pq(public, calculated)
+2. Select $e$ : $\text{gcd}(\phi(n), e ) = 1,\; 1 < e < \phi(n)$
+(public, chosen)
+3. Find $d \equiv e−1(\mod \phi(n))$
+(private, calculated)
+  
+$\text{PU} =\{e, n\}, \text{PR} =\{d, n\}$, $p$ and $q$ also private
+## Diffie-Hellman
+Key Exchange Algorithm :
+$$
+\begin{aligned}
+Y_A&=\alpha^{X_A} \mod q \\
+Y_B&=\alpha^{X_B} \mod q \\
+K_A&={Y_B}^{X_A} \mod q \\
+K_A&={Y_A}^{X_B} \mod q \\ 
+\end{aligned}
+$$
+
+Man-in-the-middle-attack (Security of Diffie-Hellman Key Exchange) :
+```mermaid
+graph LR
+	A[User A]-->|Y A|X[X Mat A]
+	X[X Mat A]-->|Y Mat A|B[User B]
+
+```
+```mermaid
+graph RL
+	B[User B]-->|Y B|X[X Mat B]
+	X[X Mat A]-->|Y Mat B|A[User A]
+
+```
+$$
+\begin{aligned}
+	K_{\text{mat}A}=Y_B^{X_{\text{mat}A}} \mod q\\
+	Y_{\text{mat}A}=\alpha^{X_{\text{matA}}} \mod q\\
+	K_{B}^` =Y_{\text{mat}A}^{X_B} \mod q\\
+	\\
+	K_{\text{mat}B}=Y_A^{X_{\text{mat}B}} \mod q\\
+	Y_{\text{mat}B}=\alpha^{X_{\text{matB}}} \mod q\\
+	K_{A}^` =Y_{\text{mat}B}^{X_A} \mod q\\
+	\\
+	\begin{cases}
+		K_{\text{mat}A}=K_{B}^`\\
+		K_{\text{mat}B}=K_{A}^`
+	\end{cases}
+\end{aligned}
+
+$$
+## ElGamal Cryptosystem
+### Key Generation
+1. Generate large prime $q$ and generator $g$ of the multiplicative group of the integers modulo q.
+2. Select a random integer $a$, $1 \leq a \leq q−2$, $\text{gcd}(a , q) = 1$, and compute $g^a \mod q$.
+3. A's Public key is $(q, g, g^a \mod q)$ ;
+A's Private key is $a$.
+### Encryption
+1. Obtain A’s authentic public key $(q, g,g^a)$.
+2. Represent the message as integers m in the range
+${0,1,\ldots,q−1}$.
+3. Select a random integer $k$, $1 \leq k \leq q−2$.
+4. Compute $\gamma = g^k \mod q$  and  $\delta = (m \times (g^a)^k) mod q$.
+5. Send ciphertext $c =(\gamma, \delta)$ to A
+### Decryption
+1. Use private key a to compute $\gamma^{q-1-a} \mod q$. Note $\gamma^{q-1-a}\equiv\gamma^{-a} \pmod q$
+$$
+	\begin{aligned}
+		\gamma^{q-1-a} \mod q\\
+		&=\gamma^{q-1} \gamma^{-a} \mod q\\
+		&=\gamma^{\varphi(q)} \gamma^{-a}\mod q \\
+		&=\gamma^{\varphi(q)} \mod q \times \gamma^{-a}\mod q\\
+		&=\gamma^{-a}\mod q
+	\end{aligned}
+	
+$$
+2. Recover m by computing $\gamma^{-a} \times\delta \mod q$
+
+# Cryptographic Hash Functions
+## Digital Signatures
+### ElGamal Scheme
+$q$ is prime number and  $\alpha$ is a primitive root of $q$
+Generate public /private key
+1. Generate a random integer $X_A$, $1<X_A<q-1$  
+2. Compute $Y_A=\alpha^{X_A} \mod q$
+3. Private key is $X_A$, public key is $\{q,\alpha,Y_A\}$
+
+Signature :
+1. Choose a random integer $K$, $1 \leq K \leq q-1$ and $\text{gcd(K,q-1)=1}$, $K$ is relatively prime to $q-1$.
+2. Compute $S_1=\alpha^K \mod q$(Note this is same as the computation of ElDamal encryption) 
+3. Compute $S_2=K^{-1}(m-X_A S_1)\mod (q-1)$
+4. The signature consists of the pair $(S_1,S_2)$ 
+
+Verification :
+$$
+\begin{aligned}
+	V_1=\alpha^m \mod q\\
+	V_2=(Y_A)^{S_1}(S_1)^{S_2}
+\end{aligned}
+$$
+Verify that $V_1=V_2$
+### Schnorr Scheme
+Generate public /private key :
+1. Choose primes $p$ and $q$, such that $q$ is a prime factor of $p-1$.
+2. Choose an integer $\alpha$, such that $\alpha^q\equiv 1 \mod p$.The value $a$,$p$, and $q$ comprise a global public key.
+3. Choose a random integer $s$ with $0<s<q$. Private key!
+4. Calculate $v=\alpha^{-s} \mod p$. Public key!
+   
+Signature : 
+1. Choose a random integer r with $0<r<q$ and compute $x=\alpha^r \mod p$.
+2. Concatenate the message with $x$ and hash the result to compute the value $e$, $e=H(M||x)$.
+3. Compute $y=(r+se) \mod q$. The signature consists of pair $(e,y)$.
+   
+Verification :
+1. Compute $x^`=\alpha^y v^e \mod p$.
+2. Verify that $e=H(M||x^`)$
+
+# Message Authentication Codes
 

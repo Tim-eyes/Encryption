@@ -21,9 +21,6 @@
     <ClInclude Include="Tables.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="key.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AES.cpp">
@@ -32,12 +29,15 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="key.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Readme.md">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Appendix\Lec 03 Appendix - Advanced Encryption Standard.pdf">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Appendix\NIST.FIPS.197.pdf">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

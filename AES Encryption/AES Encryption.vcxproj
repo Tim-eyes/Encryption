@@ -24,6 +24,7 @@
     <ProjectGuid>{708f10df-a5f0-4110-a5fa-bd115425f74a}</ProjectGuid>
     <RootNamespace>AESEncryption</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>AES_Encryption</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,15 +141,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AES.h" />
-    <ClInclude Include="key.h" />
     <ClInclude Include="Tables.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AES.cpp" />
-    <ClCompile Include="key.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Appendix\Lec 03 Appendix - Advanced Encryption Standard.pdf" />
+    <None Include="Appendix\NIST.FIPS.197.pdf" />
     <None Include="Readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

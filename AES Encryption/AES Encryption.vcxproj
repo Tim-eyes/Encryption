@@ -148,8 +148,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Appendix\Lec 03 Appendix - Advanced Encryption Standard.pdf" />
-    <None Include="Appendix\NIST.FIPS.197.pdf" />
     <None Include="Readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

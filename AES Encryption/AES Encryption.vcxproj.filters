@@ -34,11 +34,5 @@
     <None Include="Readme.md">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="Appendix\Lec 03 Appendix - Advanced Encryption Standard.pdf">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="Appendix\NIST.FIPS.197.pdf">
-      <Filter>资源文件</Filter>
-    </None>
   </ItemGroup>
 </Project>

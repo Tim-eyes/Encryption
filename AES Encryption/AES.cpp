@@ -60,15 +60,12 @@ void AES::shiftRow(uint8_t** state)
 	shiftRow(state, 3, 1);
 }
 
-void AES::mixColumn(uint8_t* m)
-{
-}
 
 void AES::mixColumn(uint8_t** state)
 {
-	uint8_t** tmp = new uint8_t *[Nb];
-	for (int i = 0; i < Nb; i++) {
-		tmp[i] = new uint8_t[Nb];
+	uint8_t** tmp = new uint8_t *[4];
+	for (int i = 0; i < 4; i++) {
+		tmp[i] = new uint8_t[4];
 	}
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -81,10 +78,82 @@ void AES::mixColumn(uint8_t** state)
 
 	memcpy(state, tmp, Nb * Nb * sizeof(uint8_t));
 
+	for (int i = 0; i < Nb; i++) {
+		delete[] tmp[i];
+	}
 	delete[] tmp;
 }
 
-void AES::invShiftColum(uint8_t** state)
+void AES::addAoundKey(uint8_t** state, uint8_t* key)
+{
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			state[i][j] = state[i][j] ^ key[i + 4 * j];
+		}
+	}
+}
+
+void AES::aesEncrypt(uint8_t in[], uint8_t out[], uint8_t* roundKeys)
+{
+	uint8_t** state = new uint8_t *[4];
+	/*state[0] = new uint8_t[4 * Nb];
+	for (int i = 0; i < 4; i++) {
+		state[i] = state[0] + Nb * i;
+	}*/
+	for (int i = 0; i < 4; i++) {
+		state[i] = new uint8_t[4];
+	}
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			state[i][j] = in[i + 4 * j];
+		}
+	}
+
+	addAoundKey(state, roundKeys);
+	for (int r = 1; r <= Nr - 1; r++) {
+		substituteBytes(state);
+		shiftRow(state);
+		mixColumn(state);
+		addAoundKey(state, roundKeys + r * 4 * Nb);
+	}
+	substituteBytes(state);
+	shiftRow(state);
+	addAoundKey(state, roundKeys + Nr * 4 * Nb);
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			out[i + 4 * j] = state[i][j];
+		}
+	}
+	
+	for (int i = 0; i < 4; i++) {
+		delete[] state[i];
+	}
+	delete[] state;
+
+}
+
+void AES::invMixColumn(uint8_t** state)
+{
+	uint8_t s[4], s_inv[4];
+	for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < 4; i++) {
+			s[i] = state[i][j];
+		}
+
+		s_inv[0] = xtime(0x0e, s[0]) ^ xtime(0x0b, s[1]) ^ xtime(0x0d, s[2]) ^ xtime(0x09, s[3]);
+		s_inv[1] = xtime(0x09, s[0]) ^ xtime(0x0e, s[1]) ^ xtime(0x0b, s[2]) ^ xtime(0x0d, s[3]);
+		s_inv[2] = xtime(0x0d, s[1]) ^ xtime(0x09, s[1]) ^ xtime(0x0e, s[2]) ^ xtime(0x0b, s[3]);
+		s_inv[3] = xtime(0x0b, s[1]) ^ xtime(0x0d, s[1]) ^ xtime(0x09, s[2]) ^ xtime(0x0e, s[3]);
+
+		for (int i = 0; i < 4; i++) {
+			state[i][j] = s_inv[i];
+		}
+	}
+}
+
+void AES::invShiftRow(uint8_t** state)
 {
 	shiftRow(state, 1, 1);
 	shiftRow(state, 2, 2);
@@ -102,6 +171,46 @@ void AES::invSubstituteBytes(uint8_t** state)
 	}
 }
 
+void AES::aesDecrypt(uint8_t in[], uint8_t out[], uint8_t* roundKeys)
+{
+	uint8_t** state = new uint8_t * [4];
+	/*for (int i = 0; i < 4; i++) {
+		state[i] = new uint8_t[4];
+	}*/
+
+	for (int i = 0; i < 4; i++) {
+		state[i] = new uint8_t[4];
+	}
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			state[i][j] = in[i + 4 * j];
+		}
+	}
+
+	addAoundKey(state, roundKeys + Nr * 4 * Nb);
+	for (int r = Nr - 1; r >= 1 ; r--) {
+		invShiftRow(state);
+		invSubstituteBytes(state);
+		addAoundKey(state, roundKeys + r * 4 * Nb);
+		invMixColumn(state);	
+	}
+	invShiftRow(state);
+	invSubstituteBytes(state);	
+	addAoundKey(state, roundKeys);
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			out[i + 4 * j] = state[i][j];
+		}
+	}
+
+	for (int i = 0; i < 4; i++) {
+		delete[] state[i];
+	}
+	delete[] state;
+}
+
 void AES::keyExpansion(uint8_t key[], uint8_t w[])
 {
 	uint8_t* tmp = new uint8_t[4];
@@ -114,10 +223,9 @@ void AES::keyExpansion(uint8_t key[], uint8_t w[])
 	}
 	i = 4 * Nk;
 	while (i < 4 * Nb * (Nr + 1)) {
-		tmp[0] = w[i - 4 + 0];
-		tmp[1] = w[i - 4 + 1];
-		tmp[2] = w[i - 4 + 2];
-		tmp[3] = w[i - 4 + 3];
+		for (int k = 0; k < 4; k++) {
+			tmp[k] = w[i - 4 + k];
+		}
 		if (i / 4 % Nk == 0) {
 			rotWord(tmp);
 			subWord(tmp);
@@ -127,10 +235,9 @@ void AES::keyExpansion(uint8_t key[], uint8_t w[])
 		else if (Nk > 6 && i / 4 % Nk == 4) {
 			subWord(tmp);
 		}
-		w[i] = w[i - 4 * Nk] ^ tmp[0];
-		w[i + 1] = w[i + 1 - 4 * Nk] ^ tmp[1];
-		w[i + 2] = w[i + 2 - 4 * Nk] ^ tmp[2];
-		w[i + 3] = w[i + 3 - 4 * Nk] ^ tmp[3];
+		for (int k = 0; k < 4; k++) {
+			w[i + k] = w[i + k - 4 * Nk] ^ tmp[k];
+		}
 		i += 4;
 	}
 
@@ -142,6 +249,27 @@ void AES::keyExpansion(uint8_t key[], uint8_t w[])
 uint8_t AES::xtime(uint8_t st)
 {
 	return (st << 1) ^ (st & 0x80 ? 0x1b : 0x00);
+}
+
+uint8_t AES::xtime(uint8_t a, uint8_t b)
+{
+	uint8_t res = 0;
+	uint8_t high_bit_mask = 0x80;
+	uint8_t high_bit = 0;
+	uint8_t modulo = 0x1B; /* x^8 + x^4 + x^3 + x + 1 */
+
+	for (int i = 0; i < 8; i++) {
+		if (b & 1) {
+			res ^= a;
+		}
+		high_bit = a & high_bit_mask;
+		a <<= 1;
+		if (high_bit) {
+			a ^= modulo;
+		}
+		b >>= 1;
+	}
+	return res;
 }
 
 void AES::subWord(uint8_t* a)

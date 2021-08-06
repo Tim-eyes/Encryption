@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DES_Encryption", "Project\Project.vcxproj", "{7AA8B044-39F8-429D-ACD1-21F75A4F70A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DES_Encryption", "DES_Encryption\Project.vcxproj", "{7AA8B044-39F8-429D-ACD1-21F75A4F70A4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AES Encryption", "AES Encryption\AES Encryption.vcxproj", "{708F10DF-A5F0-4110-A5FA-BD115425F74A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AES_Encryption", "AES_Encryption\AES_Encryption.vcxproj", "{708F10DF-A5F0-4110-A5FA-BD115425F74A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RC4_Algorithms", "RC4_Algorithms\RC4_Algorithms.vcxproj", "{980F8CEF-9728-4C28-B8BA-D895AFC3B027}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample-Test", "Sample-Test\Sample-Test.vcxproj", "{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{980F8CEF-9728-4C28-B8BA-D895AFC3B027}.Release|x64.Build.0 = Release|x64
 		{980F8CEF-9728-4C28-B8BA-D895AFC3B027}.Release|x86.ActiveCfg = Release|Win32
 		{980F8CEF-9728-4C28-B8BA-D895AFC3B027}.Release|x86.Build.0 = Release|Win32
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Debug|x64.ActiveCfg = Debug|x64
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Debug|x64.Build.0 = Debug|x64
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Debug|x86.ActiveCfg = Debug|Win32
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Debug|x86.Build.0 = Debug|Win32
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Release|x64.ActiveCfg = Release|x64
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Release|x64.Build.0 = Release|x64
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Release|x86.ActiveCfg = Release|Win32
+		{B166C0AF-BAAD-4C7B-8DC6-E9525CCCCFE5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

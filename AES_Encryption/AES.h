@@ -17,14 +17,14 @@ constexpr uint8_t ROUND = 10; //AES 128 bits 10 rounds
 using wordType = std::array<uint8_t, COLUMN>;
 using blockType = std::array<wordType, ROW>;
 
-
+using u_int = unsigned int;
 
 class AES {
 private:
 	int Nr;
 	int Nb;
 	int Nk;
-	uint8_t blockBytesLen;
+	u_int blockBytesLen;
 
 	void substituteBytes(uint8_t **state);
 	void shiftRow(uint8_t** state, int i, int n);
@@ -48,22 +48,25 @@ private:
 	void rotWord(uint8_t* a);
 	void xorWord(uint8_t* a, uint8_t* b, uint8_t* c);
 	void rCon(uint8_t* a, int n);
-	void xorBlock(uint8_t* a, uint8_t* b, uint8_t* c, int len);
+	void xorBlock(uint8_t* a, uint8_t* b, uint8_t* c, u_int len);
 
+	uint8_t* setPaddingArr(uint8_t in[], u_int inLen, u_int _len);
+	u_int getBlockLen(u_int len);
 	
 public:
-	AES(int keyLen = 128);
-	virtual ~AES();
+	AES(int keyLen);
+	~AES();
 
+	
+	uint8_t* encryptECB(uint8_t in[], u_int inLen, uint8_t key[], u_int & outLen);
+	uint8_t* decryptECB(uint8_t in[], u_int inLen, uint8_t key[]);
+	uint8_t* encryptCBC(uint8_t in[], u_int inLen, uint8_t key[], uint8_t* iv, u_int & outLen);
+	uint8_t* decryptCBC(uint8_t in[], u_int inLen, uint8_t key[], uint8_t* iv);
 	//TBD
-	uint8_t* encrptECB();
-	uint8_t* decrptECB();
-	uint8_t* encrptCBC();
-	uint8_t* decrptCBC();
-	uint8_t* encrptCFB();
-	uint8_t* decrptCFB();
-	uint8_t* encrptOFB();
-	uint8_t* decrptOFB();
+	uint8_t* encryptCFB(uint8_t in[], u_int inLen, uint8_t key[], uint8_t* iv, u_int& outLen);
+	uint8_t* decryptCFB(uint8_t in[], u_int inLen, uint8_t key[], uint8_t* iv);
+	uint8_t* encryptOFB(uint8_t in[], u_int inLen, uint8_t key[], uint8_t* iv, u_int& outLen);
+	uint8_t* decryptOFB(uint8_t in[], u_int inLen, uint8_t key[], uint8_t* iv);
 	
 
 	
